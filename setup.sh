@@ -1,7 +1,15 @@
 #!/bin/sh
 
 # Install zsh and change standard shell
-sudo apt-get install zsh
+if [ $(which apt-get) ]; then
+        sudo apt-get install zsh
+    elif [ $(which brew) ]; then
+        brew install zsh
+    else
+        echo "No known package manager installed"
+        exit 
+fi
+
 chsh -s $(which zsh)
 
 # Install Oh My Zsh
