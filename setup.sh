@@ -2,14 +2,16 @@
 
 # Install zsh and change standard shell
 if [ $(which apt-get) ]; then
-        sudo apt-get install zsh
+    sudo apt-get install zsh
     elif [ $(which brew) ]; then
         brew install zsh
 	elif [ $(which yum) ]; then
 		sudo yum install zsh
-        else
-	        echo "No known package manager installed"
-		exit 
+	        elif [ $(which zypper) ]; then
+			sudo zypper install zsh
+		else
+		        echo "No known package manager installed"
+			exit 
 fi
 
 chsh -s $(which zsh)
