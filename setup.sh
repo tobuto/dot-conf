@@ -2,12 +2,16 @@
 
 # Install zsh and change standard shell
 if [ $(which apt-get) ]; then
-        sudo apt-get install zsh
+    sudo apt-get install zsh
     elif [ $(which brew) ]; then
         brew install zsh
-    else
-        echo "No known package manager installed"
-        exit 
+	elif [ $(which yum) ]; then
+		sudo yum install zsh
+	        elif [ $(which zypper) ]; then
+			sudo zypper install zsh
+		else
+		        echo "No known package manager installed"
+			exit 
 fi
 
 chsh -s $(which zsh)
@@ -29,3 +33,8 @@ fi
 if [ -e $PWD/.user-conf ]; then
 	echo "source $PWD/.user-conf" >> ~/.zshrc
 fi
+
+# Insert already exisiting conf files into zsh
+for f in ~/.*aliases*; do 
+	echo "source $f" >> ~/.zshrc
+done
