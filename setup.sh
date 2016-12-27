@@ -38,3 +38,7 @@ fi
 for f in ~/.*aliases*; do 
 	echo "source $f" >> ~/.zshrc
 done
+
+# insert Profile path in zprofile
+echo "PATH=$(echo $PATH)" >> /etc/zsh/zprofile
+echo "export PATH" >> /etc/zsh/zprofile
