@@ -18,7 +18,7 @@ else
     echo "ZSH already installed"
 fi
 
-if ! [[ $(which zsh) =~ ^.*zsh.*  ]]; then 
+if ! $(echo $SHELL | grep -q "zsh"); then
     chsh -s $(which zsh)
 fi
 echo "\$SHELL -> zsh"
