@@ -49,6 +49,10 @@ fi
 
 # Insert already exisiting conf files into zsh
 for f in $(ls -a ~ | grep \.\*aliases\.\*); do 
-	echo "source $f" >> ~/.zshrc
+	echo "source ~/$f" >> ~/.zshrc
     echo "Added $f as source in zshrc"
 done
+
+# insert Profile path in zprofile
+echo "PATH=$(echo $PATH)" >> /etc/zsh/zprofile
+echo "export PATH" >> /etc/zsh/zprofile
