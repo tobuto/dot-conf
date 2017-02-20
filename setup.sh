@@ -2,29 +2,31 @@
 INSTALL=""
 # Install zsh and change standard shell
 if [ $(which zsh) ]; then
-        echo "ZSH already installed"
+    echo "ZSH already installed"
 else
     INSTALL=$INSTALL" zsh"
 fi
 
 if [ $(which curl) ]; then
-        echo "CURL already installed"
+    echo "CURL already installed"
 else
     INSTALL=$INSTALL" curl"
 fi
 
-if [ $(which apt-get) ]; then
+if [ ! -z $INSTALL ]; then
+    if [ $(which apt-get) ]; then
         sudo apt-get install $INSTALL
         elif [ $(which brew) ]; then
-            brew install $INSTALL
-	    elif [ $(which yum) ]; then
-    	    sudo yum install $INSTALL
-	    elif [ $(which zypper) ]; then
-	        sudo zypper install $INSTALL
+        brew install $INSTALL
+	elif [ $(which yum) ]; then
+    	sudo yum install $INSTALL
+	elif [ $(which zypper) ]; then
+	sudo zypper install $INSTALL
         else
-	        echo "No known package manager installed"
-		    exit 
+	echo "No known package manager installed"
+        exit
     fi
+fi
 
 if ! $(echo $SHELL | grep -q "zsh"); then
     chsh -s $(which zsh)
