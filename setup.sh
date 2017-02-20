@@ -39,6 +39,21 @@ if ! [ -d ~/.oh-my-zsh ]; then
     cp ~/.zshrc ~/.zshrc.orig 2> /dev/null
 fi
 
+if ! [ $(which curl) ]; then
+    if [ $(which apt-get) ]; then
+        sudo apt-get install curl
+        elif [ $(which brew) ]; then
+            brew install curl
+	    elif [ $(which yum) ]; then
+    	    sudo yum install curl
+	    elif [ $(which zypper) ]; then
+	        sudo zypper install curl
+        else
+	        echo "No known package manager installed"
+		    exit 
+    fi
+fi  
+
 # Download xxf theme
 if ! [ -f ~/.oh-my-zsh/themes/xxf.zsh-theme ]; then
     curl -Lo ~/.oh-my-zsh/themes/xxf.zsh-theme https://gist.githubusercontent.com/xfanwu/18fd7c24360c68bab884/raw/f09340ac2b0ca790b6059695de0873da8ca0c5e5/xxf.zsh-theme > /dev/null
