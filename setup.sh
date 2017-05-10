@@ -39,6 +39,23 @@ if ! [ -d ~/.oh-my-zsh ]; then
     cp ~/.zshrc ~/.zshrc.orig 2> /dev/null
 fi
 
+# Install jump plugin with following symbolic links
+while true; do
+    read -p "Do you want the jump plugin which follows symbolic links? [yes]: " yn
+        case $yn in
+            [Yy][Ee][Ss]|[Yy]|"" )
+                echo "Downloading new jump plugin..."
+                curl -Lo ~/.oh-my-zsh/plugins/jump/jump.plugin.zsh https://raw.githubusercontent.com/kingmarv/oh-my-zsh/master/plugins/jump/jump.plugin.zsh > /dev/null
+                echo "New jump plugin enabled"
+                break;;
+            [Nn][Oo]|[Nn] )
+                echo "Skipping new jump plugin"
+                break;;
+            * )
+                echo "Please answer yes or no.";;
+    esac
+done
+
 # Download xxf theme
 if ! [ -f ~/.oh-my-zsh/themes/xxf.zsh-theme ]; then
     curl -Lo ~/.oh-my-zsh/themes/xxf.zsh-theme https://gist.githubusercontent.com/xfanwu/18fd7c24360c68bab884/raw/f09340ac2b0ca790b6059695de0873da8ca0c5e5/xxf.zsh-theme > /dev/null
