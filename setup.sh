@@ -1,21 +1,31 @@
 #!/bin/sh
-
+INSTALL=""
 # Install zsh and change standard shell
-if ! [ $(which zsh) ]; then
-    if [ $(which apt-get) ]; then
-        sudo apt-get install zsh
-        elif [ $(which brew) ]; then
-            brew install zsh
-	    elif [ $(which yum) ]; then
-    	    sudo yum install zsh
-	    elif [ $(which zypper) ]; then
-	        sudo zypper install zsh
-        else
-	        echo "No known package manager installed"
-		    exit 
-    fi
-else
+if [ $(which zsh) ]; then
     echo "ZSH already installed"
+else
+    INSTALL=$INSTALL" zsh"
+fi
+
+if [ $(which curl) ]; then
+    echo "CURL already installed"
+else
+    INSTALL=$INSTALL" curl"
+fi
+
+if [ ! -z $INSTALL ]; then
+    if [ $(which apt-get) ]; then
+        sudo apt-get install $INSTALL
+        elif [ $(which brew) ]; then
+        brew install $INSTALL
+	elif [ $(which yum) ]; then
+    	sudo yum install $INSTALL
+	elif [ $(which zypper) ]; then
+	sudo zypper install $INSTALL
+        else
+	echo "No known package manager installed"
+        exit
+    fi
 fi
 
 if ! $(echo $SHELL | grep -q "zsh"); then
@@ -28,6 +38,23 @@ if ! [ -d ~/.oh-my-zsh ]; then
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     cp ~/.zshrc ~/.zshrc.orig 2> /dev/null
 fi
+
+# Install jump plugin with following symbolic links
+while true; do
+    read -p "Do you want the jump plugin which follows symbolic links? [yes]: " yn
+        case $yn in
+            [Yy][Ee][Ss]|[Yy]|"" )
+                echo "Downloading new jump plugin..."
+                curl -Lo ~/.oh-my-zsh/plugins/jump/jump.plugin.zsh https://raw.githubusercontent.com/kingmarv/oh-my-zsh/master/plugins/jump/jump.plugin.zsh > /dev/null
+                echo "New jump plugin enabled"
+                break;;
+            [Nn][Oo]|[Nn] )
+                echo "Skipping new jump plugin"
+                break;;
+            * )
+                echo "Please answer yes or no.";;
+    esac
+done
 
 # Download xxf theme
 if ! [ -f ~/.oh-my-zsh/themes/xxf.zsh-theme ]; then
