@@ -1,5 +1,10 @@
 #!/bin/sh
 INSTALL=""
+# Check for root
+SUDO=''
+if [ `whoami` != root ]; then
+    SUDO='sudo'
+fi
 # Install zsh and change standard shell
 if [ $(which zsh) ]; then
     echo "ZSH already installed"
@@ -15,15 +20,16 @@ fi
 
 if [ ! -z $INSTALL ]; then
     if [ $(which apt-get) ]; then
-        sudo apt-get install $INSTALL
+    exit
+        $SUDO apt-get install $INSTALL
         elif [ $(which brew) ]; then
-        brew install $INSTALL
-	elif [ $(which yum) ]; then
-    	sudo yum install $INSTALL
-	elif [ $(which zypper) ]; then
-	sudo zypper install $INSTALL
+        $SUDO install $INSTALL
+        elif [ $(which yum) ]; then
+        $SUDO yum install $INSTALL
+        elif [ $(which zypper) ]; then
+        $SUDO zypper install $INSTALL
         else
-	echo "No known package manager installed"
+        echo "No known package manager installed"
         exit
     fi
 fi
@@ -75,7 +81,7 @@ if [ -e $PWD/.user-conf ]; then
 fi
 
 # Insert already exisiting conf files into zsh
-for f in $(ls -a ~ | grep \.\*aliases\.\*); do 
+for f in $(ls -a ~ | grep \.\*aliases\.\*); do
 	echo "source ~/$f" >> ~/.zshrc
     echo "Added $f as source in zshrc"
 done
