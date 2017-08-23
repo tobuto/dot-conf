@@ -20,15 +20,14 @@ fi
 
 if [ ! -z $INSTALL ]; then
     if [ $(which apt-get) ]; then
-    exit
         $SUDO apt-get install $INSTALL
-        elif [ $(which brew) ]; then
+    elif [ $(which brew) ]; then
         $SUDO install $INSTALL
-        elif [ $(which yum) ]; then
+    elif [ $(which yum) ]; then
         $SUDO yum install $INSTALL
-        elif [ $(which zypper) ]; then
+    elif [ $(which zypper) ]; then
         $SUDO zypper install $INSTALL
-        else
+    else
         echo "No known package manager installed"
         exit
     fi
@@ -87,5 +86,5 @@ for f in $(ls -a ~ | grep \.\*aliases\.\*); do
 done
 
 # insert Profile path in zprofile
-echo "PATH=$(echo $PATH)" >> /etc/zsh/zprofile
-echo "export PATH" >> /etc/zsh/zprofile
+echo "PATH=$(echo $PATH)" | $SUDO tee -a /etc/zsh/zprofile
+echo "export PATH" | $SUDO tee -a /etc/zsh/zprofile
