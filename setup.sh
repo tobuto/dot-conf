@@ -18,6 +18,13 @@ else
     INSTALL=$INSTALL" curl"
 fi
 
+# Check if chsh is installed
+if [ $(which chsh) ]; then
+    echo "chsh already installed"
+else
+    INSTALL=$INSTALL" util-linux-user"
+fi
+
 if [ ! -z $INSTALL ]; then
     if [ $(which apt-get) ]; then
         $SUDO apt-get install $INSTALL
