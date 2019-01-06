@@ -1,4 +1,4 @@
-alias la='ls -la'
+alias la='ls -lha'
 alias lag='la | grep'
 alias c='clear'
 alias ntul='sudo netstat -tulpen'
