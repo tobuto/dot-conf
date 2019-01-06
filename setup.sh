@@ -53,12 +53,25 @@ if [ -e $PWD/.aliases ]; then
     echo "Added .aliases as source in zshrc"
 fi
 if [ -e $PWD/.user-conf ]; then
-	echo "source $PWD/.user-conf" >> ~/.zshrc
+    prompt=y
+else
+    read -p "Do you want to create a User Config file? <y/N> " prompt
+fi
+if [[ $prompt =~ [yY](es)* ]]; then
+    touch $PWD/.user-conf
+    echo "export DOTCONFPATH=$PWD" >> ~/.zshrc
+    echo "Created .user-conf"
+fi
+
+if [ -e $PWD/.user-conf ]; then
+    tmp=$(mktemp)
+    awk -v pwd=$PWD '!found && /source \$ZSH\/oh-my-zsh.sh/ { print "source "pwd"/.user-conf"; found=1 } 1' ~/.zshrc > $tmp
+    mv $tmp ~/.zshrc
     echo "Added .user-conf as source in zshrc"
 fi
 
 # Insert already exisiting conf files into zsh
-for f in $(ls -a ~ | grep \.\*aliases\.\*); do 
+for f in $(ls -a ~ | grep \.\*aliases\.\*); do
 	echo "source ~/$f" >> ~/.zshrc
     echo "Added $f as source in zshrc"
 done
