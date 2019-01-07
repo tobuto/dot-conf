@@ -41,7 +41,7 @@ if [ ! -z $INSTALL ]; then
 fi
 
 if ! $(echo $SHELL | grep -q "zsh"); then
-    chsh -s $(which zsh)
+    $SUDO chsh $(whoami) -s $(which zsh)
 fi
 echo "\$SHELL -> zsh"
 
