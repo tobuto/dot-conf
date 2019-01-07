@@ -86,7 +86,7 @@ if [ -e $PWD/.user-conf ]; then
 else
     read -p "Do you want to create a User Config file? <y/N> " prompt
 fi
-if [[ $prompt =~ [yY](es)* ]]; then
+if (echo "$prompt" | grep -Eq "^[yY](es)*$"); then
     touch $PWD/.user-conf
     echo "export DOTCONFPATH=$PWD" >> ~/.zshrc
     echo "Created .user-conf"
