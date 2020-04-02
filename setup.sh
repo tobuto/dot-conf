@@ -68,9 +68,9 @@ while true; do
     esac
 done
 
-# Download xxf theme
+# Copy xxf theme
 if ! [ -f ~/.oh-my-zsh/themes/xxf.zsh-theme ]; then
-    curl -Lo ~/.oh-my-zsh/themes/xxf.zsh-theme https://gist.githubusercontent.com/xfanwu/18fd7c24360c68bab884/raw/f09340ac2b0ca790b6059695de0873da8ca0c5e5/xxf.zsh-theme > /dev/null
+    cp ./xxf.zsh-theme ~/.oh-my-zsh/themes/xxf.zsh-theme
 fi
 
 # Copy .zshrc
