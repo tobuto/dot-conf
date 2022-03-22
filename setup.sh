@@ -47,7 +47,7 @@ echo "\$SHELL -> zsh"
 
 # Install Oh My Zsh
 if ! [ -d ~/.oh-my-zsh ]; then
-    git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+    git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
     cp ~/.zshrc ~/.zshrc.orig 2> /dev/null
 fi
 
